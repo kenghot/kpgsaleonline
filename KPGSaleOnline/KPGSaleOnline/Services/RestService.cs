@@ -1,6 +1,7 @@
 ﻿using KPGSaleOnline.IService;
-using KPGSaleOnline.Model;
 using Newtonsoft.Json;
+using sol.ServiceModel.Common;
+using sol.ServiceModel.Sale;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,25 +11,30 @@ namespace KPGSaleOnline.Services
 {
     public class RestService : IRestService
     {
-        HttpClient _client;
-
+        private HttpClient _client;
+        private string _solUrl;
 
         public RestService()
         {
             _client = new HttpClient();
+
+#if DEBUG
+            _solUrl = "http://172.22.25.166:55187/";
+#else
+#endif
         }
 
-        public async Task<List<SaleData>> GetSaleData()
+        public async Task<ReturnObject<SaleModel>> GetSaleData(DateTime date)
         {
-            var ret = new List<SaleData>();
+            var ret = new ReturnObject<SaleModel>();
             try
             {
-                var uri = new Uri("http://sol.kingpower.com/?method=getsale&datadate=20191212");
+                var uri = new Uri($"{_solUrl}v1/sol/getsaledata?date={date.Year}-{date.Month}-{date.Day}");
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ret = JsonConvert.DeserializeObject<List<SaleData>>(content);
+                    ret = JsonConvert.DeserializeObject<ReturnObject<SaleModel>>(content);
                 }
             }catch (Exception ex)
             {

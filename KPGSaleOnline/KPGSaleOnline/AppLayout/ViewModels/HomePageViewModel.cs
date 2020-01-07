@@ -5,15 +5,38 @@ using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using KPGSaleOnline.AppLayout.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace KPGSaleOnline.AppLayout.ViewModels
 {
     [Preserve(AllMembers = true)]
-    public class HomePageViewModel
+    public class HomePageViewModel : INotifyPropertyChanged
     {
         private const string sampleListFile = "KPGSaleOnline.AppLayout.TemplateList.xml";
+        
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Category> Templates { get; set; }
+        public ObservableCollection<Category> Templates { get; set; }
+        
+        private string headerText;
+        public string HeaderText
+        {
+            set
+            {
+                if (headerText != value)
+                {
+                    headerText = value;
+                    OnPropertyChanged("HeaderText");
+
+                }
+            }
+            get
+            {
+                return headerText;
+            }
+        }
 
         public Category SelectedCategory
         {
@@ -39,7 +62,8 @@ namespace KPGSaleOnline.AppLayout.ViewModels
         /// </summary>
         public HomePageViewModel()
         {
-            Templates = new List<Category>();
+            HeaderText = "KPG sale online";
+            Templates = new ObservableCollection<Category>();
             PopulateList();
         }
 
@@ -180,6 +204,17 @@ namespace KPGSaleOnline.AppLayout.ViewModels
 
             return string.Empty;
         }
+        #region Methods
+
+        /// <summary>
+        /// The PropertyChanged event occurs when changing the value of property.
+        /// </summary>
+        /// <param name="propertyName">Property name</param>
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
     }
 }

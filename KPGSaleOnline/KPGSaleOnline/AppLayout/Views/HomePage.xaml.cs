@@ -1,14 +1,19 @@
 ﻿using KPGSaleOnline.AppLayout.Controls;
 using KPGSaleOnline.AppLayout.Models;
+using KPGSaleOnline.AppLayout.ViewModels;
+using KPGSaleOnline.Services;
+using sol.ServiceModel.Sale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Entry = Microcharts.Entry;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
+using SkiaSharp;
+using Microcharts;
 
 namespace KPGSaleOnline.AppLayout.Views
 {
@@ -44,8 +49,36 @@ namespace KPGSaleOnline.AppLayout.Views
         public HomePage()
         {
             InitializeComponent();
-        }
 
+            AppSettings.Instance.SelectedPrimaryColor = 1;
+            //RefreshData();
+        }
+        private void RefreshData()
+        {
+            List<Entry> entries = new List<Entry>
+            {
+                new Entry(200)
+                {
+                    Label = "January",
+                    ValueLabel = "200",
+                    Color = SKColor.Parse("#266489")
+                },
+                new Entry(400)
+                {
+                    Label = "February",
+                    ValueLabel = "400",
+                    Color = SKColor.Parse("#68B9C0")
+                },
+                //new Entry(-100)
+                //{
+                //    Label = "March",
+                //    ValueLabel = "-100",
+                //    Color = SKColor.Parse("#90D585")
+                //}
+            };
+            chartSummary.Chart = new NRadialGaugeChart { Entries = entries, BackgroundColor = SKColors.Transparent };
+            
+        }
 
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -120,11 +153,11 @@ namespace KPGSaleOnline.AppLayout.Views
             }
             else if (scrollValue > -215)
             {
-                Description.Opacity = factor;
-                HeaderImage.Opacity = factor;
+                chartSummary.Opacity = factor;
+               // HeaderImage.Opacity = factor;
                 HeaderText.TranslationX = this.headerDeltaX * (factor - 1);
                 HeaderText.TranslationY = (-1 * scrollValue) + (this.headerDeltaY * (factor - 1));
-                BrandName.Opacity = (scrollValue + 75) / 75;
+               // BrandName.Opacity = (scrollValue + 75) / 75;
                 ActionBar.IsVisible = false;
                 SettingsIcon.TranslationY = scrollValue * -1;
             }
@@ -132,17 +165,21 @@ namespace KPGSaleOnline.AppLayout.Views
 
         private void listView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(e.ItemIndex.ToString());
+            //System.Diagnostics.Debug.WriteLine(e.ItemIndex.ToString());
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private  void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            dateSale.Focus();
+      
+            //var sale = await rest.GetSaleData(DateTime.Now);
+
+            //listView.ItemsSource = sale.Data.CurrentSale;
+
         }
 
         private void dateSale_DateSelected(object sender, DateChangedEventArgs e)
         {
-            lableSaleDateHead.Text = $"{dateSale.Date}";
+           // lableSaleDateHead.Text = $"{dateSale.Date}";
         }
 
         private void ListView_OnSelectionChanged(object sender, SelectedItemChangedEventArgs e)
@@ -153,12 +190,40 @@ namespace KPGSaleOnline.AppLayout.Views
             }
 
             this.isNavigationInQueue = true;
-            Navigation.PushAsync(new TemplatePage(e.SelectedItem as Category));
+            //Navigation.PushAsync(new TemplatePage(e.SelectedItem as Category));
         }
 
         private void ShowSettings(object sender, EventArgs e)
         {
-            SettingsView.Show();
+            //HomePageViewModel t = (HomePageViewModel)this.BindingContext;
+            //t.HeaderText = DateTime.Now.ToString();
+            //t.Templates.Insert(0, new Category("test name", null, "test description", "", true));
+            //t.Templates[0].Name = DateTime.Now.ToString();
+            //BindingData();
+            RefreshData();
+            //SettingsView.Show();
+        }
+        private void BindingData()
+        {
+            var rest = new RestService();
+            var sale = rest.GetSaleData(DateTime.Now);
+            
+            sale.ContinueWith((x) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"task complete: {x.IsCompleted.ToString()}");
+                if (x.IsCompleted)
+                {
+                    if (x.Result.IsCompleted)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"api complete: {x.Result.IsCompleted.ToString()}");
+                       
+                        
+                    }
+
+                }
+
+
+            });
         }
     }
 }

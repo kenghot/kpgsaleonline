@@ -1,4 +1,5 @@
-﻿using KPGSaleOnline.Model;
+﻿using sol.ServiceModel.Common;
+using sol.ServiceModel.Sale;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace KPGSaleOnline.IService
 {
     public interface IRestService
     {
-        Task<List<SaleData>> GetSaleData();
+        Task<ReturnObject<SaleModel>> GetSaleData(DateTime date);
     }
 }

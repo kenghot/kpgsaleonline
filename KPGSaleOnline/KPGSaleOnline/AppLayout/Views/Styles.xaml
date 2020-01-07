@@ -3,12 +3,13 @@
     x:Class="KPGSaleOnline.AppLayout.Views.Styles"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+   
     xmlns:controls="clr-namespace:KPGSaleOnline.AppLayout.Controls;assembly=KPGSaleOnline"
     xmlns:converters="clr-namespace:KPGSaleOnline.Converters;assembly=KPGSaleOnline"
-    xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+   
     xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
-
+    <!--xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"-->
+    <!--xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"-->
     <converters:StringToImageResourceConverter x:Key="ImageResourceConverter" />
 
     <x:String x:Key="HomePageTitle">Essential UI Kit</x:String>
@@ -119,7 +120,7 @@
     </Style>
 
     <!--  Common style for gradient buttons  -->
-    <Style x:Key="SfGradientButtonStyle" TargetType="buttons:SfButton">
+    <!--<Style x:Key="SfGradientButtonStyle" TargetType="buttons:SfButton">
         <Setter Property="BackgroundGradient">
             <Setter.Value>
                 <graphics:SfLinearGradientBrush>
@@ -132,6 +133,6 @@
         </Setter>
         <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
-    </Style>
+    </Style>-->
 
 </ResourceDictionary>

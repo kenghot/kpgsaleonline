@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AppLayout\Views\TemplateHostPage.xaml.cs" />
+    <Compile Remove="AppLayout\Views\TemplatePage.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="AppLayout\Views\TemplateHostPage.xaml" />
+    <EmbeddedResource Remove="AppLayout\Views\TemplatePage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="AppLayout\TemplateList.xml" />
   </ItemGroup>
 
@@ -15,10 +25,14 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.39" />
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\git\KPGSolApi\KPGSolApi\sol.ServiceModel\sol.ServiceModel.csproj" />
+    <ProjectReference Include="..\MicroCharts\Microcharts.Forms\Microcharts.Forms.csproj" />
+    <ProjectReference Include="..\MicroCharts\Microcharts\Microcharts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,14 +45,12 @@
     <EmbeddedResource Update="AppLayout\Views\Styles.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="AppLayout\Views\TemplateHostPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="AppLayout\Views\TemplatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Themes\LightTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 </Project>

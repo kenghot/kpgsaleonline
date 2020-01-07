@@ -19,10 +19,10 @@ namespace KPGSaleOnline
             InitializeComponent();
         }
 
-        private async void buttonOK_Clicked(object sender, EventArgs e)
+        private  void buttonOK_Clicked(object sender, EventArgs e)
         {
             var rest = new RestService();
-            listData.ItemsSource = await rest.GetSaleData();
+            //listData.ItemsSource = await rest.GetSaleData();
         }
     }
 }

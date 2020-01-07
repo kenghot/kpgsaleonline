@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Xamarin.Forms.Internals;
 
 namespace KPGSaleOnline.AppLayout.Models
 {
     [Preserve(AllMembers = true)]
-    public class Category
+    public class Category : INotifyPropertyChanged
     {
         #region Constructor
 
@@ -22,11 +24,52 @@ namespace KPGSaleOnline.AppLayout.Models
 
         #region Properties
 
-        public string Name { get; set; }
+        // public string Name { get; set; }
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if (_Name != value)
+                {
+                    _Name = value;
+                    this.OnPropertyChanged("Name");
+                }
+            }
+        }
+        private string _Name;
+        public string Icon
+        {
+            get { return _Icon; }
+            set
+            {
+                if (_Icon != value)
+                {
+                    _Icon = value;
+                    this.OnPropertyChanged("Icon");
+                }
+            }
+        }
+        private string _Icon;
 
-        public string Icon { get; set; }
+        public string Description
+        {
+            get { return _Description; }
+            set
+            {
+                if (_Description != value)
+                {
+                    _Description = value;
+                    this.OnPropertyChanged("Description");
+                }
+            }
+        }
+        private string _Description;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Description { get; set; }
+       
+
+ 
 
         public List<Template> Pages { get; set; }
 
@@ -41,6 +84,15 @@ namespace KPGSaleOnline.AppLayout.Models
         public string UpdateType { get; set; }
 
         public bool IsUpdate { get; set; }
+
+        /// <summary>
+        /// The PropertyChanged event occurs when changing the value of property.
+        /// </summary>
+        /// <param name="propertyName">Property name</param>
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
     }
 }

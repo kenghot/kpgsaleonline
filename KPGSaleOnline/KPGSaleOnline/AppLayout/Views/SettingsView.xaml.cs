@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Syncfusion.XForms.Border;
+//using Syncfusion.XForms.Border;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -28,27 +28,27 @@ namespace KPGSaleOnline.AppLayout.Views
 
             var viewCollection = new ObservableCollection<View>();
 
-            foreach (var color in colors)
-            {
-                var grid = new Grid();
-                var border = new SfBorder
-                {
-                    Margin = new Thickness(3),
-                    HorizontalOptions = LayoutOptions.Center,
-                    CornerRadius = 22,
-                    BorderWidth = 0,
-                    Content = new BoxView { Color = color }
-                };
-                grid.Children.Add(border);
-                viewCollection.Add(grid);
-            }
+            //foreach (var color in colors)
+            //{
+            //    var grid = new Grid();
+            //    var border = new  SfBorder
+            //    {
+            //        Margin = new Thickness(3),
+            //        HorizontalOptions = LayoutOptions.Center,
+            //        CornerRadius = 22,
+            //        BorderWidth = 0,
+            //        Content = new BoxView { Color = color }
+            //    };
+            //    grid.Children.Add(border);
+            //    viewCollection.Add(grid);
+            //}
 
-            PrimaryColorsView.ItemsSource = viewCollection;
-            PrimaryColorsView.SelectedIndex = AppSettings.Instance.SelectedPrimaryColor;
-            PrimaryColorsView.SelectionChanged += (sender, e) =>
-            {
-                PrimaryColorsView.SelectionIndicatorSettings.Color = colors[e.Index];
-            };
+            //PrimaryColorsView.ItemsSource = viewCollection;
+            //PrimaryColorsView.SelectedIndex = AppSettings.Instance.SelectedPrimaryColor;
+            //PrimaryColorsView.SelectionChanged += (sender, e) =>
+            //{
+            //    PrimaryColorsView.SelectionIndicatorSettings.Color = colors[e.Index];
+            //};
         }
         
         public void Show()
@@ -71,7 +71,7 @@ namespace KPGSaleOnline.AppLayout.Views
 
         private void ApplySettings(object sender, EventArgs e)
         {
-            AppSettings.Instance.SelectedPrimaryColor = PrimaryColorsView.SelectedIndex;
+            //AppSettings.Instance.SelectedPrimaryColor = PrimaryColorsView.SelectedIndex;
             this.Hide();
         }
         
